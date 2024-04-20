@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.project.dao.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.company.project.model.Goods">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_type" jdbcType="INTEGER" property="goodsType" />
+    <result column="repertory" jdbcType="DECIMAL" property="repertory" />
+    <result column="selling_price" jdbcType="DECIMAL" property="sellingPrice" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="exposure_number" jdbcType="INTEGER" property="exposureNumber" />
+    <result column="graphic_details" jdbcType="VARCHAR" property="graphicDetails" />
+    <result column="heat" jdbcType="INTEGER" property="heat" />
+    <result column="similarity" jdbcType="DECIMAL" property="similarity" />
+    <result column="place" jdbcType="VARCHAR" property="place" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="expiration_date" jdbcType="TIMESTAMP" property="expirationDate" />
+    <result column="drug_type_id" jdbcType="BIGINT" property="drugTypeId" />
+      <result column="preset_threshold" jdbcType="VARCHAR" property="presetThreshold" />
+  </resultMap>
+
+    <select id="selectAllByIsDelete" resultMap="BaseResultMap">
+        select *
+        from t_goods
+        where is_delete = 0
+    </select>
+
+    <select id="getGoodsCount" resultType="java.math.BigDecimal">
+        select count(1)
+        from t_goods
+        where is_delete = 0
+    </select>
+
+    <select id="randList" resultMap="BaseResultMap">
+        select *
+        from t_goods
+        where is_delete = 0
+        group by rand() limit 10
+    </select>
+
+    <select id="findGoodsById" resultMap="BaseResultMap">
+        select *
+        from t_goods
+        where is_delete = 0
+        and id = #{id}
+    </select>
+
+    <select id="selectAllGoods" resultMap="BaseResultMap">
+        select *
+        from t_goods
+        where is_delete = 0
+    </select>
+
+    <select id="findAllByModal" resultMap="BaseResultMap">
+        select *
+        from t_goods
+        where is_delete = 0
+        <if test="goodsName != null and goodsName != ''">
+            and goods_name like concat('%',#{goodsName},'%')
+        </if>
+    </select>
+
+    <select id="findByAllIds" resultMap="BaseResultMap">
+        select *
+        from t_goods
+        where is_delete = 0
+        and id in
+        <foreach collection="array" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="list" resultType="com.company.project.model.Goods">
+        select s.id as id,s.created_at as createdAt,s.created_by as createdBy,
+                s.updated_by as updatedBy,s.updated_at as updatedAt,s.status as status,
+                s.goods_name as goodsName,s.goods_type as goodsType,s.repertory as repertory,s.selling_price as sellingPrice,
+                s.img_url as imgUrl,s.sort as sort,s.exposure_number as exposureNumber,s.graphic_details as graphicDetails,
+                s.heat as heat,s.similarity as similarity,s.state as state,
+                s.expiration_date as expirationDate,s.drug_type_id as drugTypeId,
+                tdt.name as drugTypeName
+        from t_goods s
+        left join t_drug_type tdt on s.drug_type_id = tdt.id
+        where s.is_delete = 0
+        <if test="goodsType != null and goodsType != ''">
+          and s.goods_type = #{goodsType}
+        </if>
+        <if test="drugTypeId != null and drugTypeId != ''">
+            and s.drug_type_id = #{drugTypeId}
+        </if>
+        <if test="goodsName != null and goodsName != ''">
+            and s.goods_name like concat('%',#{goodsName},'%')
+        </if>
+        order by s.created_at desc
+    </select>
+
+  <select id="detail" resultType="com.company.project.model.Goods">
+        select s.id as id,s.created_at as createdAt,s.created_by as createdBy,
+                s.updated_by as updatedBy,s.updated_at as updatedAt,s.status as status,
+                s.goods_name as goodsName,s.goods_type as goodsType,s.repertory as repertory,s.selling_price as sellingPrice,
+                s.img_url as imgUrl,s.sort as sort,s.exposure_number as exposureNumber,s.graphic_details as graphicDetails,
+                s.heat as heat,s.similarity as similarity,s.state as state,
+                s.expiration_date as expirationDate,s.drug_type_id as drugTypeId,
+                tdt.name as drugTypeName
+        from t_goods s
+        left join t_drug_type tdt on s.drug_type_id = tdt.id
+        where s.is_delete = 0
+        and s.id = #{id}
+    </select>
+
+
+  <select id="selectByGoodsTypeId" resultMap="BaseResultMap">
+        select *
+        from t_goods t
+        where t.is_delete = 0
+        and t.goods_type = #{goodsTypeId}
+    </select>
+
+  <select id="findGoodsCount" resultType="java.lang.Integer">
+        select count(1)
+        from t_goods
+        where is_delete = 0
+        and id = #{goodsId}
+    </select>
+
+</mapper>
