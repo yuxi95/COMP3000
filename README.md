@@ -1,8 +1,8 @@
-#Chinese Herbal Manaygment System
+# Chinese Herbal Manaygment System
 COMP3000 Final Year Project  
 Allocated Supervisor: Dr Vivek Singh
 
-#Extended project description
+# Extended project description
 
 For this project, I will develop an android application that will use a phones front facing camera to track a pen stylus on a desk and recognise the characters being written. The system would have to detect when the stylus is down, when a character has finished being written, and when a new character is being started.
 
