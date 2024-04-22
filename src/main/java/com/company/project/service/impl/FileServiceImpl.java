@@ -63,15 +63,12 @@ public class FileServiceImpl implements FileService {
         fileName = StringUtil.getFormatterDate(new Date(), "yyyyMMdd") + "/" + System.currentTimeMillis() + suffixName;
         try {
             file.transferTo(new File(uploadDir + "/" + fileName));
-            String path;
+            String path = new String();
             if (sysDir.contains("D")){
                 // request.getScheme() 获取请求的协议名称
                 // request.getServerName() 获取请求的域名
                 // request.getServerPort() 获取请求的端口号
                 path = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/file/" + fileName;
-            }else {
-                //Linux环境
-                path = Constants.LINUX_FILE_USER + request.getServerPort() + "/file/" + fileName;
             }
             return ResultGenerator.genSuccessResult(path);
         } catch (IllegalStateException e) {
