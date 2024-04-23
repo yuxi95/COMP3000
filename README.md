@@ -3,7 +3,7 @@ COMP3000 Final Year Project
 Allocated Supervisor: Dr Vivek Singh
 
 # Project Board
-https://trello.com/invite/chinesemedicinesystem/ATTI93411d5ecf1f1b4d5ab0558735b5efc00DC73E50
+[https://trello.com/invite/chinesemedicinesystem/ATTI93411d5ecf1f1b4d5ab0558735b5efc00DC73E50](https://trello.com/b/nRyhUdv8/chinese-medicinal-materials-management-system)
 
 # Extended project description
 This project chose the technology that combines the Spring Boot framework with the MySQL database for development, which to a certain extent improved the management efficiency and service quality of the Chinese herbal medicine company, enriched the team's technical reserves, and met the needs of customers.
